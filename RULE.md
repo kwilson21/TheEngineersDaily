@@ -30,6 +30,7 @@ Everything we build should help engineers better understand their vocation as fo
 - Every lesson has one technical deliverable.
 - Every lesson ends with reflection.
 - Every lesson naturally leads to the next.
+- Every season must define Theme, Duration, Final Artifact, and Formation Outcome. Nothing more.
 - Never force Scripture into engineering. Let Scripture shape the engineer.
 
 ---

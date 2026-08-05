@@ -4,45 +4,37 @@ Version: 0.1
 
 ---
 
-## Current Season
+## Season 0
 
-Season 0
+Theme:
 
 Working as Worship
 
----
+Total Days:
 
-## Current Lesson
+7
 
-Day 1
+Current Day:
 
----
+1
 
-## Story
+Final Artifact:
 
-You began by seeing that a program is not an object for display, but a tool of service for a real person with a real burden.
+A polished command-line application that faithfully serves one real person.
 
----
+Formation Outcome:
 
-## Formation Completed
+The reader understands that software development can become an act of faithful service to Christ.
 
-Calling
+Engineering Outcome:
 
----
+The reader can create small, useful software that clearly serves one person's need.
 
-## Engineering Completed
-
-Software exists to serve people.
-
----
-
-## Current Application
+Current Application:
 
 A minimal command-line program at `src/serve_one_person.py` that names one person served and one task helped.
 
----
-
-## Next Lesson
+Next Lesson:
 
 Day 1
 

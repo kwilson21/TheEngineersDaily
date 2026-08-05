@@ -19,5 +19,6 @@ Protect simplicity above all else.
 Directory conventions:
 
 - Save lessons in `lessons/season_X/day_X.md`.
+- Save season definitions in `lessons/season_X/season_X.md`.
 - Put lesson application code in `src/`.
 - Keep `RULE.md`, `LESSON_TEMPLATE.md`, and `CURRENT_STATE.md` at the repository root.
