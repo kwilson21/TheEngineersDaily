@@ -11,6 +11,7 @@ Requirements:
 - Provide one objective technical implementation.
 - Write one reflection question that naturally emerges from the story.
 - Update CURRENT_STATE.md for tomorrow.
+- Generate a suggested git commit message for today's completed lesson.
 
 Reduce ambiguity whenever possible.
 
