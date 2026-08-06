@@ -16,7 +16,7 @@ Total Days:
 
 Current Day:
 
-1
+2
 
 Final Artifact:
 
@@ -32,25 +32,24 @@ The reader can create small, useful software that clearly serves one person's ne
 
 Current Application:
 
-A minimal command-line program at `src/serve_one_person.py` that names one person served and one task helped.
+A minimal command-line program at `src/serve_one_person.py` that prints one requirement sentence naming one person, one task, and one success condition.
 
 Next Lesson:
 
-Day 1
+Day 2
 
 Question:
 
-What is the smallest requirement that protects the person being served?
+How can the program prove it keeps its promise each time it runs?
 
 Engineering Principle:
 
-A useful requirement names the user, the need, and the success condition.
+A small automated test protects the behavior the user depends on.
 
 Formation:
 
-Humility
+Faithfulness
 
 Primary Source:
 
-James 1:19
-Proverbs 18:13
+Luke 16:10
