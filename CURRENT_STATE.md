@@ -16,7 +16,7 @@ Total Days:
 
 Current Day:
 
-2
+3
 
 Final Artifact:
 
@@ -32,24 +32,24 @@ The reader can create small, useful software that clearly serves one person's ne
 
 Current Application:
 
-A minimal command-line program at `src/serve_one_person.py` that prints one requirement sentence naming one person, one task, and one success condition.
+A minimal command-line program at `src/serve_one_person.py` whose exact Ruth requirement sentence is protected by one automated test in `tests/test_serve_one_person.py`.
 
 Next Lesson:
 
-Day 2
+Day 3
 
 Question:
 
-How can the program prove it keeps its promise each time it runs?
+How can the program steward Ruth's requirement so she does not have to retype it every time?
 
 Engineering Principle:
 
-A small automated test protects the behavior the user depends on.
+A tiny data file keeps repeated user information in one durable place.
 
 Formation:
 
-Faithfulness
+Stewardship
 
 Primary Source:
 
-Luke 16:10
+1 Peter 4:10
