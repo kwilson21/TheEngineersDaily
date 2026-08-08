@@ -16,7 +16,7 @@ Total Days:
 
 Current Day:
 
-3
+4
 
 Final Artifact:
 
@@ -32,24 +32,24 @@ The reader can create small, useful software that clearly serves one person's ne
 
 Current Application:
 
-A minimal command-line program at `src/serve_one_person.py` whose exact Ruth requirement sentence is protected by one automated test in `tests/test_serve_one_person.py`.
+A minimal command-line program at `src/serve_one_person.py` that reads Ruth's repeated requirement from `data/ruth_requirement.json` by default, with the exact requirement sentence protected by one automated test in `tests/test_serve_one_person.py`.
 
 Next Lesson:
 
-Day 3
+Day 4
 
 Question:
 
-How can the program steward Ruth's requirement so she does not have to retype it every time?
+How should the program handle Ruth's saved requirement when the data file is missing a needed value?
 
 Engineering Principle:
 
-A tiny data file keeps repeated user information in one durable place.
+Validate saved data before trusting it.
 
 Formation:
 
-Stewardship
+Integrity
 
 Primary Source:
 
-1 Peter 4:10
+Proverbs 11:3

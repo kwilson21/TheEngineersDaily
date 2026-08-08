@@ -1,20 +1,16 @@
-import argparse
-
-def serve_person(args):
-    print("Requirement: {p} needs to {t} so that {s}.".format(p=args.person, t=args.task,s=args.success))    
+import json
 
 def main():
-    parser = argparse.ArgumentParser(prog='Serve One Person')
-    
-    parser.add_argument('--person', help='The name of the person we are serving', required=True)
+    with open("/Users/kazon/repos/TheEngineersDaily/data/ruth_requirement.json") as f:
+        ruth_requirement_data = json.load(f)
 
-    parser.add_argument('--task', help='The task we are performing to serve the person', required=True)
+    person = ruth_requirement_data["person"]
+    task = ruth_requirement_data["task"]
+    success = ruth_requirement_data["success"]
 
-    parser.add_argument('--success', required=True)
+    return "Requirement: {p} needs to {t} so that {s}.".format(p=person, t=task,s=success)
 
-    args = parser.parse_args()
-
-    serve_person(args)
 
 if __name__ == "__main__":
-    main()
+    res_str = main()
+    print(res_str)
