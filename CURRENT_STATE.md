@@ -16,7 +16,7 @@ Total Days:
 
 Current Day:
 
-4
+5
 
 Final Artifact:
 
@@ -32,24 +32,24 @@ The reader can create small, useful software that clearly serves one person's ne
 
 Current Application:
 
-A minimal command-line program at `src/serve_one_person.py` that reads Ruth's repeated requirement from `data/ruth_requirement.json` by default, with the exact requirement sentence protected by one automated test in `tests/test_serve_one_person.py`.
+A minimal command-line program at `src/serve_one_person.py` that reads Ruth's repeated requirement from `data/ruth_requirement.json` by default, accepts an injected data file path for tests, protects the exact requirement sentence with an automated test, and refuses to build the sentence when required saved data is incomplete.
 
 Next Lesson:
 
-Day 4
+Day 5
 
 Question:
 
-How should the program handle Ruth's saved requirement when the data file is missing a needed value?
+How should the program explain validation failure so Ruth knows what to fix next?
 
 Engineering Principle:
 
-Validate saved data before trusting it.
+A useful error message names the problem and the next action.
 
 Formation:
 
-Integrity
+Service
 
 Primary Source:
 
-Proverbs 11:3
+Mark 10:45
