@@ -10,4 +10,4 @@ class TestServeOnePerson(unittest.TestCase):
 
     def test_invalid_serve_person(self):
         with self.assertRaises(ValueError):
-            main("/Users/kazon/repos/TheEngineersDaily/tests/data/ruth_requirement.json")
+            main("/Users/kazon/repos/TheEngineersDaily/tests/data/incomplete_ruth_requirement.json")
