@@ -9,5 +9,11 @@ class TestServeOnePerson(unittest.TestCase):
         self.assertEqual(res, expected_res)
 
     def test_invalid_serve_person(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(ValueError) as e:
             main("/Users/kazon/repos/TheEngineersDaily/tests/data/incomplete_ruth_requirement.json")
+
+        error_message = "Saved requirement is incomplete: success is required. Add a non-empty success value to the saved requirement file."
+
+        value_error = e.exception
+
+        self.assertEqual(str(value_error), error_message)

@@ -16,7 +16,7 @@ Total Days:
 
 Current Day:
 
-5
+6
 
 Final Artifact:
 
@@ -32,24 +32,24 @@ The reader can create small, useful software that clearly serves one person's ne
 
 Current Application:
 
-A minimal command-line program at `src/serve_one_person.py` that reads Ruth's repeated requirement from `data/ruth_requirement.json` by default, accepts an injected data file path for tests, protects the exact requirement sentence with an automated test, and refuses to build the sentence when required saved data is incomplete.
+A minimal command-line program at `src/serve_one_person.py` that reads Ruth's repeated requirement from `data/ruth_requirement.json` by default, accepts an injected data file path for tests, protects the exact requirement sentence with automated tests, refuses to build the sentence when required saved data is incomplete, and raises an actionable validation error that names the first invalid field and the next action.
 
 Next Lesson:
 
-Day 5
+Day 6
 
 Question:
 
-How should the program explain validation failure so Ruth knows what to fix next?
+What final polish would make the command ready to hand to Ruth?
 
 Engineering Principle:
 
-A useful error message names the problem and the next action.
+A polished command-line program keeps success and expected failure understandable at the command boundary.
 
 Formation:
 
-Service
+Wisdom
 
 Primary Source:
 
-Mark 10:45
+James 3:17
