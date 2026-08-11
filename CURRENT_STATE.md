@@ -16,7 +16,7 @@ Total Days:
 
 Current Day:
 
-6
+Complete after Day 6
 
 Final Artifact:
 
@@ -32,24 +32,24 @@ The reader can create small, useful software that clearly serves one person's ne
 
 Current Application:
 
-A minimal command-line program at `src/serve_one_person.py` that reads Ruth's repeated requirement from `data/ruth_requirement.json` by default, accepts an injected data file path for tests, protects the exact requirement sentence with automated tests, refuses to build the sentence when required saved data is incomplete, and raises an actionable validation error that names the first invalid field and the next action.
+A polished command-line program at `src/serve_one_person.py` that reads Ruth's repeated requirement from `data/ruth_requirement.json` by default, accepts an injected data file path for tests, validates required saved fields before formatting, protects both the exact success sentence and the expected validation failure with automated tests, prints success to standard output, prints expected validation errors to standard error without a traceback, and exits with an understandable status code at the command boundary.
 
 Next Lesson:
 
-Day 6
+Define Season 1 before generating another lesson.
 
 Question:
 
-What final polish would make the command ready to hand to Ruth?
+What should the next season form in the engineer after Ruth's CLI is ready to hand off?
 
 Engineering Principle:
 
-A polished command-line program keeps success and expected failure understandable at the command boundary.
+A new season should define its final artifact before assigning new daily builds.
 
 Formation:
 
-Wisdom
+Discernment
 
 Primary Source:
 
-James 3:17
+Proverbs 16:3

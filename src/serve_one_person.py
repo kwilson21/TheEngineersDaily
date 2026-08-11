@@ -1,4 +1,5 @@
 import json
+import sys
 
 def main(data_file_path = "/Users/kazon/repos/TheEngineersDaily/data/ruth_requirement.json"):
     with open(data_file_path) as f:
@@ -28,6 +29,17 @@ def validate_field(field, field_name):
     if not field.strip():
         raise ValueError(error_message.format(f=field_name))    
 
-if __name__ == "__main__":
-    res_str = main()
+
+def run_cli(data_file_path = "/Users/kazon/repos/TheEngineersDaily/data/ruth_requirement.json"):
+    try:
+        res_str = main(data_file_path)
+    except ValueError as e:
+        sys.stderr.write(str(e))
+        return 1
+
     print(res_str)
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(run_cli())
