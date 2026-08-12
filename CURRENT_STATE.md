@@ -48,7 +48,7 @@ Total Days:
 
 Current Day:
 
-Ready for Day 0
+Ready for Day 1
 
 Final Artifact:
 
@@ -64,24 +64,24 @@ The reader understands how a human need moves through requirement, HTTP request,
 
 Current Application:
 
-No Season 1 application code exists yet. Harbor should begin as simply as possible and grow only through the daily lessons.
+No Season 1 application code exists yet. After Day 0, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`. The intended user is Mara, an on-call engineer who writes incident handoff notes between alerts. The need is to store and retrieve short incident notes through a small HTTP API. Success means she can create, list, read, update, and delete notes without losing the latest note text.
 
 Next Lesson:
 
-Season 1 Day 0 - Service - Define Harbor's user and need.
+Season 1 Day 1 - Humility - HTTP request and response.
 
 Question:
 
-Who does Harbor serve, and what note-taking need must v1 faithfully meet?
+What should Harbor return to prove the service is reachable before it manages notes?
 
 Engineering Principle:
 
-Software should begin with a named person, a concrete need, and a clear definition of useful.
+An HTTP API begins with one request and one deliberate response.
 
 Formation:
 
-Service
+Humility
 
 Primary Source:
 
-Mark 10:45
+Flask official Quickstart

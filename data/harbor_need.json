@@ -1,0 +1,5 @@
+{
+    "user": "Mara, an on-call engiener who writes incident handoff notes between alerts",
+    "need": "store and retrieve short incident notes through a small HTTP API",
+    "success": "she can create, list, read, update and delete notes without losing the latest note text"
+}
