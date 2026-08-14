@@ -48,7 +48,7 @@ Total Days:
 
 Current Day:
 
-Ready for Day 1
+Ready for Day 2
 
 Final Artifact:
 
@@ -64,24 +64,24 @@ The reader understands how a human need moves through requirement, HTTP request,
 
 Current Application:
 
-No Season 1 application code exists yet. After Day 0, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`. The intended user is Mara, an on-call engineer who writes incident handoff notes between alerts. The need is to store and retrieve short incident notes through a small HTTP API. Success means she can create, list, read, update, and delete notes without losing the latest note text.
+After Day 1, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app` and one Harbor API route, `GET /health`, which returns HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`. Harbor does not manage notes yet, has no note routes, and has no persistence.
 
 Next Lesson:
 
-Season 1 Day 1 - Humility - HTTP request and response.
+Season 1 Day 2 - Clarity - Resources and URLs.
 
 Question:
 
-What should Harbor return to prove the service is reachable before it manages notes?
+Which single URL should name Mara's collection of incident notes?
 
 Engineering Principle:
 
-An HTTP API begins with one request and one deliberate response.
+A URL should name one resource clearly before behavior grows around it.
 
 Formation:
 
-Humility
+Clarity
 
 Primary Source:
 
-Flask official Quickstart
+Flask official Quickstart - Routing
