@@ -8,4 +8,4 @@ def health():
 
 @app.route("/notes")
 def notes():
-    return {"error": "notes collection is not implemented yet"}, 501
+    return {"notes": []}, 200

@@ -48,7 +48,7 @@ Total Days:
 
 Current Day:
 
-Ready for Day 3
+Ready for Day 4
 
 Final Artifact:
 
@@ -64,24 +64,24 @@ The reader understands how a human need moves through requirement, HTTP request,
 
 Current Application:
 
-After Day 2, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, and adds one notes collection route, `GET /notes`, which returns HTTP status `501` and JSON where `error` is `notes collection is not implemented yet`. Harbor has a clear URL for Mara's notes collection, but does not store, list, create, read, update, or delete notes yet, and has no persistence.
+After Day 3, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, and has one notes collection route, `GET /notes`, which returns HTTP status `200` and JSON exactly equal to `{"notes": []}` when no notes exist. Harbor can represent an empty notes collection, but does not store, create, read, update, or delete notes yet, and has no persistence.
 
 Next Lesson:
 
-Season 1 Day 3 - Faithfulness - GET a collection of notes.
+Season 1 Day 4 - Responsibility - POST a new note.
 
 Question:
 
-What should Mara receive when she asks for all notes before any notes exist?
+What must Mara send, and what should Harbor return, when she creates a note?
 
 Engineering Principle:
 
-A collection endpoint should return a predictable representation, even when the collection is empty.
+A create endpoint should accept one clear representation and return the created resource with a stable identifier.
 
 Formation:
 
-Faithfulness
+Responsibility
 
 Primary Source:
 
-MDN Web Docs - GET request method: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/GET
+MDN Web Docs - POST request method: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/POST
