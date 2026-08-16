@@ -48,7 +48,7 @@ Total Days:
 
 Current Day:
 
-Ready for Day 4
+Ready for Day 5
 
 Final Artifact:
 
@@ -64,24 +64,24 @@ The reader understands how a human need moves through requirement, HTTP request,
 
 Current Application:
 
-After Day 3, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, and has one notes collection route, `GET /notes`, which returns HTTP status `200` and JSON exactly equal to `{"notes": []}` when no notes exist. Harbor can represent an empty notes collection, but does not store, create, read, update, or delete notes yet, and has no persistence.
+After Day 4, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, keeps `GET /notes` returning HTTP status `200`, and adds `POST /notes` for creating notes. `POST /notes` accepts valid JSON exactly shaped as `{"text": "<note text>"}`, creates an in-memory note with a stable integer `id` starting at `1`, returns HTTP status `201`, and returns the created note as JSON exactly shaped as `{"note": {"id": 1, "text": "<note text>"}}` for the first created note in the current process. A later `GET /notes` returns the in-memory notes collection as JSON shaped as `{"notes": [{"id": 1, "text": "<note text>"}]}`. Harbor can create and list notes only while the Flask process lives, but does not persist notes, validate malformed input, read one note, update one note, delete one note, authenticate users, or serve a frontend.
 
 Next Lesson:
 
-Season 1 Day 4 - Responsibility - POST a new note.
+Season 1 Day 5 - Stewardship - Persist notes with SQLite.
 
 Question:
 
-What must Mara send, and what should Harbor return, when she creates a note?
+How can Harbor keep Mara's notes after the Flask process restarts?
 
 Engineering Principle:
 
-A create endpoint should accept one clear representation and return the created resource with a stable identifier.
+Important application state should live in durable storage, not only in process memory.
 
 Formation:
 
-Responsibility
+Stewardship
 
 Primary Source:
 
-MDN Web Docs - POST request method: https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Methods/POST
+Python documentation - sqlite3: https://docs.python.org/3/library/sqlite3.html
