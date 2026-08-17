@@ -48,7 +48,7 @@ Total Days:
 
 Current Day:
 
-Ready for Day 5
+Ready for Day 6
 
 Final Artifact:
 
@@ -64,24 +64,24 @@ The reader understands how a human need moves through requirement, HTTP request,
 
 Current Application:
 
-After Day 4, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, keeps `GET /notes` returning HTTP status `200`, and adds `POST /notes` for creating notes. `POST /notes` accepts valid JSON exactly shaped as `{"text": "<note text>"}`, creates an in-memory note with a stable integer `id` starting at `1`, returns HTTP status `201`, and returns the created note as JSON exactly shaped as `{"note": {"id": 1, "text": "<note text>"}}` for the first created note in the current process. A later `GET /notes` returns the in-memory notes collection as JSON shaped as `{"notes": [{"id": 1, "text": "<note text>"}]}`. Harbor can create and list notes only while the Flask process lives, but does not persist notes, validate malformed input, read one note, update one note, delete one note, authenticate users, or serve a frontend.
+After Day 5, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, keeps `GET /notes` returning HTTP status `200`, keeps `POST /notes` returning HTTP status `201`, and uses Python's built-in `sqlite3` module to persist notes in a local SQLite database at `data/harbor.sqlite3`. Harbor creates a `notes` table when needed with an integer primary key `id` and required text value `text`. `POST /notes` accepts valid JSON exactly shaped as `{"text": "<note text>"}`, inserts the note into SQLite, and returns the created note as JSON shaped as `{"note": {"id": <new id>, "text": "<note text>"}}`, with `id` starting at `1` in a fresh database. `GET /notes` reads notes from SQLite in ascending `id` order and returns JSON shaped as `{"notes": [{"id": 1, "text": "<note text>"}]}`. Created notes survive a Flask process restart, but Harbor does not validate malformed input, read one note, update one note, delete one note, authenticate users, or serve a frontend.
 
 Next Lesson:
 
-Season 1 Day 5 - Stewardship - Persist notes with SQLite.
+Season 1 Day 6 - Wisdom - Model note data deliberately.
 
 Question:
 
-How can Harbor keep Mara's notes after the Flask process restarts?
+How can Harbor keep one deliberate note representation as storage and routes grow?
 
 Engineering Principle:
 
-Important application state should live in durable storage, not only in process memory.
+As behavior grows, define one canonical data representation instead of scattering shape decisions across routes.
 
 Formation:
 
-Stewardship
+Wisdom
 
 Primary Source:
 
-Python documentation - sqlite3: https://docs.python.org/3/library/sqlite3.html
+Python documentation - sqlite3 row_factory: https://docs.python.org/3/library/sqlite3.html#sqlite3.Connection.row_factory
