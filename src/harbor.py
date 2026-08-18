@@ -22,6 +22,9 @@ def setup_db():
 
 setup_db()
 
+def note_from_row(row):
+    return {"id": row["id"], "text": row["text"]}
+
 @app.route("/health")
 def health():
     return {"service": "harbor", "status": "ok"}, 200
@@ -29,11 +32,12 @@ def health():
 @app.get("/notes")
 def get_notes():
     con = sqlite3.connect("data/harbor.sqlite3")
+    con.row_factory = sqlite3.Row
     cur = con.cursor()
 
     res = cur.execute("SELECT * FROM notes;")
 
-    notes = [{"id": r[0], "text": r[1]} for r in res.fetchall()]
+    notes = [note_from_row(row) for row in res.fetchall()]
 
     cur.close()
     con.close()
@@ -43,6 +47,7 @@ def get_notes():
 @app.post("/notes")
 def create_note():
     con = sqlite3.connect("data/harbor.sqlite3")
+    con.row_factory = sqlite3.Row
     data = request.get_json()
     cur = con.cursor()
     res = cur.execute("SELECT count(*) FROM notes;")
@@ -52,14 +57,18 @@ def create_note():
     else:
         count = 1
 
-    note = {
+    new_note = {
         "id": count + 1,
         "text": data["text"]
     }
 
-    cur.execute("INSERT INTO notes VALUES(?, ?)", list(note.values()))
+    cur.execute("INSERT INTO notes VALUES(?, ?)", list(new_note.values()))
 
     con.commit()
+
+    res = cur.execute(f"SELECT * FROM notes WHERE id = {count + 1};")
+    row = res.fetchone()
+    note = note_from_row(row)
 
     cur.close()
     con.close()
