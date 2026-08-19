@@ -13,6 +13,8 @@ def setup_db():
 
     table_name = res.fetchone()
     if table_name and table_name[0] == "notes":
+        cur.close()
+        con.close()
         return True
     else:
         res = cur.execute("CREATE TABLE notes(id INTEGER PRIMARY KEY,text TEXT)")
@@ -24,6 +26,17 @@ setup_db()
 
 def note_from_row(row):
     return {"id": row["id"], "text": row["text"]}
+
+def validate_note_json(data):
+    error_str = "Request body must be a JSON object with exactly one string field, text."
+    if not isinstance(data, dict):
+        raise ValueError(error_str)
+    if "text" not in data:
+        raise ValueError(error_str)
+    if not isinstance(data["text"], str):
+        raise ValueError(error_str)
+    if len(data.keys()) > 1:
+        raise ValueError(error_str)
 
 @app.route("/health")
 def health():
@@ -46,9 +59,16 @@ def get_notes():
 
 @app.post("/notes")
 def create_note():
+    data = request.get_json()
+
+    try:
+        validate_note_json(data)
+    except ValueError as e:
+        return {"error": str(e)}, 400
+
     con = sqlite3.connect("data/harbor.sqlite3")
     con.row_factory = sqlite3.Row
-    data = request.get_json()
+
     cur = con.cursor()
     res = cur.execute("SELECT count(*) FROM notes;")
     count_res = res.fetchone()

@@ -48,7 +48,7 @@ Total Days:
 
 Current Day:
 
-Ready for Day 7
+Ready for Day 8
 
 Final Artifact:
 
@@ -64,27 +64,27 @@ The reader understands how a human need moves through requirement, HTTP request,
 
 Current Application:
 
-After Day 6, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, keeps `GET /notes` returning HTTP status `200`, keeps `POST /notes` returning HTTP status `201`, and uses Python's built-in `sqlite3` module to persist notes in a local SQLite database at `data/harbor.sqlite3`. Harbor creates a `notes` table when needed with an integer primary key `id` and required text value `text`. `POST /notes` accepts valid JSON exactly shaped as `{"text": "<note text>"}`, inserts the note into SQLite, and returns the created note as JSON shaped as `{"note": {"id": <new id>, "text": "<note text>"}}`, with `id` starting at `1` in a fresh database. `GET /notes` reads notes from SQLite in ascending `id` order and returns JSON shaped as `{"notes": [{"id": 1, "text": "<note text>"}]}`. Created notes survive a Flask process restart. SQLite connections that read note rows return `sqlite3.Row` objects, and one function named `note_from_row` is the canonical translation from a SQLite note row to the API note dictionary with `id` and `text`; both `GET /notes` and successful `POST /notes` use it. Harbor does not validate malformed input, read one note, update one note, delete one note, authenticate users, or serve a frontend.
+After Day 7, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, keeps `GET /notes` returning HTTP status `200`, keeps valid `POST /notes` returning HTTP status `201`, and uses Python's built-in `sqlite3` module to persist notes in a local SQLite database at `data/harbor.sqlite3`. Harbor creates a `notes` table when needed with an integer primary key `id` and required text value `text`. `POST /notes` uses Flask's default `request.get_json()` behavior: an unsupported media type receives HTTP status `415` and malformed JSON receives HTTP status `400`. After Flask parses JSON, `POST /notes` accepts only an object exactly shaped as `{"text": "<note text>"}`, inserts it into SQLite, and returns the created note as JSON shaped as `{"note": {"id": <new id>, "text": "<note text>"}}`, with `id` starting at `1` in a fresh database. Every other parsed JSON value receives HTTP status `400` and JSON exactly `{"error": "Request body must be a JSON object with exactly one string field, text."}`; every rejected request leaves the persisted notes unchanged. `GET /notes` reads notes from SQLite in ascending `id` order and returns JSON shaped as `{"notes": [{"id": 1, "text": "<note text>"}]}`. Created notes survive a Flask process restart. SQLite connections that read note rows return `sqlite3.Row` objects, and one function named `note_from_row` is the canonical translation from a SQLite note row to the API note dictionary with `id` and `text`; both `GET /notes` and successful `POST /notes` use it. Harbor does not read one note, update one note, delete one note, authenticate users, serve a frontend, or have automated tests.
 
 Next Lesson:
 
-Season 1 Day 7 - Integrity - Validate malformed create requests.
+Season 1 Day 8 - Care - Retrieve one note by its identifier.
 
 Question:
 
-How can Harbor reject malformed create requests before they become persisted notes?
+How can Harbor return one requested note clearly when it exists and care for the person when it does not?
 
 Engineering Principle:
 
-Validate external input at the application boundary before it reaches durable state.
+Represent the outcome of a lookup explicitly so callers receive a clear result for both presence and absence.
 
 Formation:
 
-Integrity
+Care
 
 Primary Source:
 
-Flask documentation - Request.get_json: https://flask.palletsprojects.com/en/stable/api/#flask.Request.get_json
+Flask documentation - Variable Rules: https://flask.palletsprojects.com/en/stable/quickstart/#variable-rules
 
 ### Deferred Curriculum Guardrail
 
