@@ -95,3 +95,22 @@ def create_note():
 
     return {"note": note}, 201
 
+@app.get("/notes/<int:note_id>")
+def get_note(note_id):
+    con = sqlite3.connect("data/harbor.sqlite3")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+
+    params = (note_id,)
+    res = cur.execute("SELECT * FROM notes WHERE id = ?;", params)
+
+    row = res.fetchone()
+
+    cur.close()
+    con.close()
+
+    if not row:
+        return {"error": "Note not found."}, 404
+    else:
+        return {"note": note_from_row(row)}, 200
+
