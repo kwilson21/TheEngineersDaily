@@ -12,7 +12,7 @@ Requirements:
 - Do not write, edit, or solve the lesson application code yourself.
 - Write one reflection question that naturally emerges from the story.
 - Update CURRENT_STATE.md for tomorrow.
-- Generate a suggested git commit message for today's completed lesson.
+- Generate exactly one suggested git commit subject for today's completed lesson using this format: `Add Season <season number> Day <day number> <concise lowercase lesson focus> lesson`. Derive the focus from today's engineering work, use no conventional-commit prefix or ending punctuation, and do not offer alternatives. Example: `Add Season 1 Day 9 note update lesson`.
 
 Reduce ambiguity whenever possible.
 
