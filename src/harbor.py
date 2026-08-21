@@ -114,3 +114,31 @@ def get_note(note_id):
     else:
         return {"note": note_from_row(row)}, 200
 
+@app.patch("/notes/<int:note_id>")
+def update_note(note_id):
+    data = request.get_json()
+
+    try:
+        validate_note_json(data)
+    except ValueError as e:
+        return {"error": str(e)}, 400
+
+    con = sqlite3.connect("data/harbor.sqlite3")
+    con.row_factory = sqlite3.Row
+    cur = con.cursor()
+
+    params = (data["text"], note_id)
+
+    res = cur.execute("UPDATE notes SET text = ? WHERE id = ?", params)
+    con.commit()
+    res = cur.execute("SELECT * FROM notes WHERE id = ?",(note_id,))
+    row = res.fetchone()
+
+    cur.close()
+    con.close()
+
+    if not row:
+        return {"error": "Note not found."}, 404
+    else:
+        return {"note": note_from_row(row)}, 200
+    
