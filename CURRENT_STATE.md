@@ -48,7 +48,7 @@ Total Days:
 
 Current Day:
 
-Ready for Day 10
+Ready for Day 11
 
 Final Artifact:
 
@@ -64,28 +64,24 @@ The reader understands how a human need moves through requirement, HTTP request,
 
 Current Application:
 
-After Day 9, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, keeps `GET /notes` returning HTTP status `200`, keeps valid `POST /notes` returning HTTP status `201`, keeps valid `PATCH /notes/<int:note_id>` returning HTTP status `200`, and uses Python's built-in `sqlite3` module to persist notes in a local SQLite database at `data/harbor.sqlite3`. Harbor creates a `notes` table when needed with an integer primary key `id` and required text value `text`. `POST /notes` and `PATCH /notes/<int:note_id>` use Flask's default `request.get_json()` behavior: an unsupported media type receives HTTP status `415` and malformed JSON receives HTTP status `400`. After Flask parses JSON, each route accepts only an object exactly shaped as `{"text": "<note text>"}`. `POST /notes` inserts it into SQLite and returns the created note as JSON shaped as `{"note": {"id": <new id>, "text": "<note text>"}}`, with `id` starting at `1` in a fresh database. `PATCH /notes/<int:note_id>` queries for exactly the requested positive integer identifier; when it exists, it updates only that note's `text` and returns HTTP status `200` with JSON shaped as `{"note": {"id": <id>, "text": "<updated text>"}}`; when it does not, it returns HTTP status `404` and JSON exactly `{"error": "Note not found."}`. Every other parsed JSON value receives HTTP status `400` and JSON exactly `{"error": "Request body must be a JSON object with exactly one string field, text."}`; every rejected request leaves the persisted notes unchanged. `GET /notes` reads notes from SQLite in ascending `id` order and returns JSON shaped as `{"notes": [{"id": 1, "text": "<note text>"}]}`. `GET /notes/<int:note_id>` queries for exactly the requested positive integer identifier, returns HTTP status `200` and JSON shaped as `{"note": {"id": <id>, "text": "<text>"}}` when the note exists, and returns HTTP status `404` and JSON exactly `{"error": "Note not found."}` when it does not. Created notes survive a Flask process restart. SQLite connections that read note rows return `sqlite3.Row` objects, and one function named `note_from_row` is the canonical translation from a SQLite note row to the API note dictionary with `id` and `text`; `GET /notes`, `GET /notes/<int:note_id>`, successful `POST /notes`, and successful `PATCH /notes/<int:note_id>` use it for note responses. Harbor does not delete one note, authenticate users, serve a frontend, or have automated tests.
+After Day 10, Harbor is defined by one requirement artifact at `data/harbor_need.json` with exactly three top-level string fields: `user`, `need`, and `success`, and one minimal Flask application at `src/harbor.py`. The Flask app has an application object named `app`, keeps `GET /health` returning HTTP status `200` and JSON where `service` is `harbor` and `status` is `ok`, keeps `GET /notes` returning HTTP status `200`, keeps valid `POST /notes` returning HTTP status `201`, keeps valid `PATCH /notes/<int:note_id>` returning HTTP status `200`, keeps `DELETE /notes/<int:note_id>` returning HTTP status `204` when it deletes a note, and uses Python's built-in `sqlite3` module to persist notes in a local SQLite database at `data/harbor.sqlite3`. Harbor creates a `notes` table when needed with `id INTEGER PRIMARY KEY AUTOINCREMENT` and required text value `text`. `POST /notes` and `PATCH /notes/<int:note_id>` use Flask's default `request.get_json()` behavior: an unsupported media type receives HTTP status `415` and malformed JSON receives HTTP status `400`. After Flask parses JSON, each route accepts only an object exactly shaped as `{"text": "<note text>"}`. `POST /notes` inserts only the text into SQLite, returns the created note as JSON shaped as `{"note": {"id": <new id>, "text": "<note text>"}}`, and uses the identifier SQLite assigns, with `id` starting at `1` in a fresh database. A created identifier is never reused: after deleting note `1` from notes `1` and `2`, the next valid `POST /notes` returns note `3`. `PATCH /notes/<int:note_id>` queries for exactly the requested positive integer identifier; when it exists, it updates only that note's `text` and returns HTTP status `200` with JSON shaped as `{"note": {"id": <id>, "text": "<updated text>"}}`; when it does not, it returns HTTP status `404` and JSON exactly `{"error": "Note not found."}`. Every other parsed JSON value receives HTTP status `400` and JSON exactly `{"error": "Request body must be a JSON object with exactly one string field, text."}`; every rejected request leaves the persisted notes unchanged. `GET /notes` reads notes from SQLite in ascending `id` order and returns JSON shaped as `{"notes": [{"id": 1, "text": "<note text>"}]}`. `GET /notes/<int:note_id>` queries for exactly the requested positive integer identifier, returns HTTP status `200` and JSON shaped as `{"note": {"id": <id>, "text": "<text>"}}` when the note exists, and returns HTTP status `404` and JSON exactly `{"error": "Note not found."}` when it does not. `DELETE /notes/<int:note_id>` deletes only the note matching the requested identifier and returns HTTP status `204` with an empty response body; if no note matches, it returns HTTP status `404` and JSON exactly `{"error": "Note not found."}`, without changing persisted notes. Created notes survive a Flask process restart. SQLite connections that read note rows return `sqlite3.Row` objects, and one function named `note_from_row` is the canonical translation from a SQLite note row to the API note dictionary with `id` and `text`; `GET /notes`, `GET /notes/<int:note_id>`, successful `POST /notes`, and successful `PATCH /notes/<int:note_id>` use it for note responses. Harbor does not authenticate users, serve a frontend, or have automated tests.
 
 Next Lesson:
 
-Season 1 Day 10 - Stewardship - Delete one note safely.
+Season 1 Day 11 - Humility - Handle errors intentionally.
 
 Question:
 
-How can Harbor remove one requested note without allowing a later note to reuse its identifier?
+How can Harbor give callers a consistent, intentional JSON response when Flask or SQLite raises an unexpected error?
 
 Engineering Principle:
 
-Remove only the explicitly identified resource while preserving identifiers as durable references.
+Translate unexpected internal failures into one deliberate API response rather than exposing implementation details.
 
 Formation:
 
-Stewardship
+Humility
 
 Primary Source:
 
-SQLite documentation - AUTOINCREMENT: https://www.sqlite.org/autoinc.html
-
-### Deferred Curriculum Guardrail
-
-Day 10 must prove that deleting a note does not cause a later `POST /notes` to reuse an existing identifier. After deleting ID 1 from notes 1 and 2, the next created note must have ID 3. (Delete this after day 10)
+Flask documentation - Error Handling: https://flask.palletsprojects.com/en/stable/errorhandling/

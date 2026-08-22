@@ -17,7 +17,7 @@ def setup_db():
         con.close()
         return True
     else:
-        res = cur.execute("CREATE TABLE notes(id INTEGER PRIMARY KEY,text TEXT)")
+        res = cur.execute("CREATE TABLE notes(id INTEGER PRIMARY KEY AUTOINCREMENT,text TEXT)")
 
     cur.close()
     con.close()
@@ -48,7 +48,7 @@ def get_notes():
     con.row_factory = sqlite3.Row
     cur = con.cursor()
 
-    res = cur.execute("SELECT * FROM notes;")
+    res = cur.execute("SELECT * FROM notes ORDER BY id ASC")
 
     notes = [note_from_row(row) for row in res.fetchall()]
 
@@ -70,23 +70,16 @@ def create_note():
     con.row_factory = sqlite3.Row
 
     cur = con.cursor()
-    res = cur.execute("SELECT count(*) FROM notes;")
-    count_res = res.fetchone()
-    if count_res:
-        count = count_res[0]
-    else:
-        count = 1
 
     new_note = {
-        "id": count + 1,
         "text": data["text"]
     }
 
-    cur.execute("INSERT INTO notes VALUES(?, ?)", list(new_note.values()))
+    cur.execute("INSERT INTO notes(text) VALUES(?)", list(new_note.values()))
 
     con.commit()
 
-    res = cur.execute(f"SELECT * FROM notes WHERE id = {count + 1};")
+    res = cur.execute("SELECT * FROM notes WHERE id = ?",(cur.lastrowid,))
     row = res.fetchone()
     note = note_from_row(row)
 
@@ -141,4 +134,27 @@ def update_note(note_id):
         return {"error": "Note not found."}, 404
     else:
         return {"note": note_from_row(row)}, 200
-    
+
+@app.delete("/notes/<int:note_id>")
+def delete_note(note_id):
+    con = sqlite3.connect("data/harbor.sqlite3")
+    con.row_factory = sqlite3.Row
+
+    cur = con.cursor()
+
+    res = cur.execute("SELECT * FROM notes WHERE id = ?", (note_id,))
+
+    row = res.fetchone()
+    if not row:
+        cur.close()
+        con.close()
+        return {"error": "Note not found."}, 404
+
+    res = cur.execute("DELETE FROM notes WHERE id = ?", (note_id,))
+
+    con.commit()
+
+    cur.close()
+    con.close()
+
+    return '',204
